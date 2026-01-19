@@ -105,6 +105,8 @@ for d in */ ; do
 # sleep to avoid ip bans
         sleep 1
     done <temp2.txt
+# fix userpic extensions & remove bogus files
+    (cd userpics && for f in *; do mv "$f" "$f.$(grep "^$(file --brief --mime-type "$f")[[:space:]]" /etc/mime.types | sed 's/.*[[:space:]]//')"; done && rm *.gz)
 # trim trailing slash
     dtrimmed=$(echo "$d" | sed 's:/*$::')
 # remove temporary file
