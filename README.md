@@ -3,10 +3,15 @@ A collection of scripts for processing downloaded livejournals (converting html 
 
 ## General Setup & Required Programs
 Under one folder, create subfolder "Text4AT" as well as at least one other subfolder to put the scripts into.  I recommend a separate subfolder each for pdf processing, image processing, and link extraction / zipping.
+
 Under the "Text4AT" folder, create the following folders:  "AllLinks", "LJlinks", and "Names".  I recommend also creating folders "Imgur" and "Other" to move the completed scripts into.
+
 Curl must be installed.
+
 Place gallery-dl.bin in the image processing folder:  https://github.com/mikf/gallery-dl
+
 Add a .conf file for gallery-dl and modify the base-directory line so it reads `"base-directory": "./",`
+
 Place html2pdf in the pdf processing folder and make sure it has a headless browser installed:  https://github.com/vermaysha/html2pdf
 
 ## Usage
@@ -21,14 +26,20 @@ Place html2pdf in the pdf processing folder and make sure it has a headless brow
 
 ## End Result
 You should end up with a folder that has a pdf for every html file, a subfolder for each post with any images besides LJ userpics, a subfolder for all userpics (from every comment and post), and a subfolder caled "ImageLinks", in which the link to every embedded image on every post should be recorded in a a txt file per post.
+
 You should end up with txt files under "Text4AT" beginning with "imgur-" and "other-".  There should be one "other-" file for each LJ name, but files beginning with "imgur-" will be less likely; they should only appear for LJs which had embedded imgur files in them.
+
 You should also end up with txt files under "AllLinks", "LJlinks", and "Names" for many LJs.  Most LJs should have corresponding files in "AllLinks" and "LJlinks" but fewer may have files in "Names".
 
 ## Explanation of Results
 The files beginning with "imgur-" list every embedded pic link for imgur which appeared in that LJ.
+
 The files beginning with "other-" list every embedded pic link for sites other than imgur, which appeared in that LJ.
+
 The files in "AllLinks" contain all regular links (not embedded pictures) to sites other than LiveJournal.  (Note that LJ referers have been stripped.)
+
 The files in "LJlinks" contain all links with "livejournal" in the url somewhere.  This includes links within the same LJ.
+
 The files in "Names" contain the names of all journals which were *linked to* from that LJ.  This can be useful in the example of a fic or icon community, to find the personal journals to which people posted their fics and graphics.
 
 ## Questions & Explanations
