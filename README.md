@@ -44,7 +44,7 @@ The files in "Names" contain the names of all journals which were *linked to* fr
 
 ## Questions & Explanations
 ### Q:  Why do the "AllLinks" and such files go in their own folder but the "imgur-" and "other-" files don't?
-A:  I wanted to be able to easily track which folders in a batch had finished image processing.  During periods of long downloading of files (such as userpics) it can be impossible to tell which LJ is being worked on.  Looking in the Text4AT foler makes it abundantly clear; the next folder alphabetically after the final "other-" file is the one currently being worked on.
+A:  I wanted to be able to easily track which folders in a batch had finished image processing.  During periods of long downloading of files (such as userpics) it can be impossible to tell which LJ is being worked on.  Looking in the Text4AT folder makes it abundantly clear; the next folder alphabetically after the final "other-" file is the one currently being worked on.
 
 ### Q:  My LJlinks folder is empty!  All the rest work.  What do I do?
 A:  Rename "LJlinks" to "Ljlinks" and edit your copy of imagegrab.sh accordingly.  This fixed the issue for one computer I tried it on.
