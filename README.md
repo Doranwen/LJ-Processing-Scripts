@@ -6,7 +6,7 @@ Under one folder, create subfolder "Text4AT" as well as at least one other subfo
 
 Under the "Text4AT" folder, create the following folders:  "AllLinks", "LJlinks", and "Names".  I recommend also creating folders "Imgur" and "Other" to move the resulting text files into.
 
-Curl must be installed.
+Curl and wget must be installed.
 
 Place gallery-dl.bin in the image processing folder:  https://github.com/mikf/gallery-dl
 
