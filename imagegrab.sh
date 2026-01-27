@@ -79,10 +79,8 @@ for d in */ ; do
             mkdir -p "$post"
 # loop through each url
             while read -r flickrlink; do
-# extract userpic name
-                flimg=$(echo "$imglink" | sed 's/.*https\:\/\/(farm.\.static|static).flickr\.com\/....\///')
 # download link
-                (cd "$post" && curl -fL --output "$flimg" "$flickrlink")
+                (cd "$post" && wget --content-disposition "$flickrlink")
 # sleep to avoid ip bans
                 sleep 1
             done <temp.txt
