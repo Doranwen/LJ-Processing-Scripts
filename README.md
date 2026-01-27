@@ -47,7 +47,7 @@ The files in "Names" contain the names of all journals which were *linked to* fr
 A:  I wanted to be able to easily track which folders in a batch had finished image processing.  During periods of long downloading of files (such as userpics) it can be impossible to tell which LJ is being worked on.  Looking in the Text4AT folder makes it abundantly clear; the next folder alphabetically after the final "other-" file is the one currently being worked on.
 
 ### Q:  My LJlinks folder is empty!  All the rest work.  What do I do?
-A:  Rename "LJlinks" to "Ljlinks" and edit your copy of imagegrab.sh accordingly.  This fixed the issue for one computer I tried it on.
+A:  Rename "LJlinks" to "Ljlinks" and edit your copy of extractlinks.sh accordingly.  This fixed the issue for one computer I tried it on.
 
 ### Q:  The script only works on one folder and then quits!
 A:  Check that the path has no spaces in it.  Having spaces in the file path (even if it's a folder or two above the one you're working in) can cause issues.
