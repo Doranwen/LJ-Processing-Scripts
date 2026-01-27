@@ -4,7 +4,7 @@ A collection of scripts for processing downloaded livejournals (converting html 
 ## General Setup & Required Programs
 Under one folder, create subfolder "Text4AT" as well as at least one other subfolder to put the scripts into.  I recommend a separate subfolder each for pdf processing, image processing, and link extraction / zipping.
 
-Under the "Text4AT" folder, create the following folders:  "AllLinks", "LJlinks", and "Names".  I recommend also creating folders "Imgur" and "Other" to move the completed scripts into.
+Under the "Text4AT" folder, create the following folders:  "AllLinks", "LJlinks", and "Names".  I recommend also creating folders "Imgur" and "Other" to move the resulting text files into.
 
 Curl must be installed.
 
