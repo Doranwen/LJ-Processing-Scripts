@@ -35,10 +35,26 @@ for d in */ ; do
             while read -r ljlink; do
 # check if pic is imgprx.livejournal.net
                 if (echo "$ljlink" | grep -Eq "https://imgprx.livejournal.net"); then
+# extract real link
+                    redirect=$(curl -Ls -o /dev/null -w %{url_effective} "$ljlink")
+# save real link
+                    echo "$redirect" >> imgprx.txt
+# check if link is for Photobucket
+                    if [[ "$redirect" == *"photobucket"* ]]; then
+# run gallery-dl on Photobucket urls
+                        (cd "$post" && ../../gallery-dl.bin --sleep 0.0-0.5 "$redirect")
+# check if link is for imgprx
+                    elif (echo "$redirect" | grep -Eq "https://imgprx.livejournal.net"); then
 # extract pic name
-                    ljimg=$(echo "$ljlink" | sed -E 's/.*(..........)/\1/' | sed -E 's/\-/\_/')
+                        ljimg=$(echo "$redirect" | sed -E 's/.*(..........)/\1/' | sed -E 's/\-/\_/')
 # download link
-                    (cd "$post" && curl -fL --output "$ljimg" "$ljlink")
+                        (cd "$post" && curl -fL --output "$ljimg" "$redirect")
+# add extension
+                        (cd "$post" && mv "$ljimg" "$ljimg.$(grep "^$(file --brief --mime-type "$ljimg")[[:space:]]" /etc/mime.types | sed 's/.*[[:space:]]//')")
+                    else
+# download link
+                        (cd "$post" && wget --content-disposition "$redirect")
+                    fi
                 else
 # if pic is pics.livejournal.com, get largest version of pic
                     bigimg=$(echo "$ljlink" | sed 's,/s[0-9]*x[0-9]*$,,')
@@ -50,8 +66,12 @@ for d in */ ; do
 # sleep to avoid ip bans
                 sleep 1
             done <temp.txt
-# move temp file to where it can be collected
+# move any gallery-dl files into main post folder and remove unnecessary folder
+            (cd "$post" && mv directlink/* . && rmdir directlink)
+# move temp files to where they can be collected
             mv temp.txt ../temp/lj1-"$post".txt
+            cp imgprx.txt ImageLinks/"$post"-redirect.txt
+            mv imgprx.txt ../temp/redirect-"$post".txt
         fi
 # check if there are Imgur hosted urls in the txt file, and run loop if yes
         if grep -Eq "imgur.com" ImageLinks/"$post".txt; then
