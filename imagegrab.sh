@@ -36,9 +36,11 @@ for d in */ ; do
 # check if pic is imgprx.livejournal.net
                 if (echo "$ljlink" | grep -Eq "https://imgprx.livejournal.net"); then
 # extract real link
-                    redirect=$(curl -Ls -o /dev/null -w %{url_effective} "$ljlink")
+                    reallink=$(curl -Ls -o /dev/null -w %{url_effective} "$ljlink")
 # save real link
-                    echo "$redirect" >> imgprx.txt
+                    echo "$reallink" >> imgprx.txt
+# strip real link of any strings with ?
+                    redirect=$(echo "$reallink" | sed 's/\?.*//')
 # check if link is for Photobucket
                     if [[ "$redirect" == *"photobucket"* ]]; then
 # run gallery-dl on Photobucket urls
