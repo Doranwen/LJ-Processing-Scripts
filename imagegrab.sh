@@ -20,8 +20,14 @@ for d in */ ; do
             grep "photobucket" ImageLinks/"$post".txt | sort -u > temp.txt
 # run gallery-dl on Photobucket urls
             ../gallery-dl.bin --sleep 0.0-0.5 -i temp.txt
+# check if directory already exists & remove directlink
+            if [ -d "$post" ]; then
+                mv directlink/* "$post"
+                rmdir directlink
+            else
 # rename download folder to the post number
-            mv directlink "$post"
+                mv directlink "$post"
+            fi
 # move temp file to where it can be collected
             mv temp.txt ../temp/photobucket-"$post".txt
         fi
@@ -45,6 +51,14 @@ for d in */ ; do
                     if [[ "$redirect" == *"photobucket"* ]]; then
 # run gallery-dl on Photobucket urls
                         (cd "$post" && ../../gallery-dl.bin --sleep 0.0-0.5 "$redirect")
+# check if directory already exists & remove directlink
+                        if [ -d "$post" ]; then
+                            mv directlink/* "$post"
+                            rmdir directlink
+                        else
+# rename download folder to the post number
+                            mv directlink "$post"
+                        fi
 # check if link is for imgprx
                     elif (echo "$redirect" | grep -Eq "https://imgprx.livejournal.net"); then
 # extract pic name
