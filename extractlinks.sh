@@ -7,12 +7,8 @@ for d in */ ; do
     folder=$(echo "$d" | sed 's:/*$::')
     urlname=$(echo "$folder" | sed 's/\_/\-/')
 
-# loop that looks for each html file in the directory and performs desired tasks
-    for f in *.html; do
-
 # extract links
-        grep -Po '(?<=href=")[^"]*' "$f" >> links1.txt
-    done
+    grep -Pho '(?<=href=")[^"]*' *.html >> links1.txt
 
 # sort, dedupe, & remove referer
     cat links1.txt  |  sed 's/https\:\/\/www\.livejournal\.com\/away\?to\=//' | sed 's/\%3A/\:/' | sed 's/\%2F/\//' | sort -u > links2.txt
