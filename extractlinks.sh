@@ -8,7 +8,7 @@ for d in */ ; do
     urlname=$(echo "$folder" | sed 's/\_/\-/')
 
 # extract links
-    grep -Pho '(?<=href=")[^"]*' *.html >> links1.txt
+    grep -Pho '(?<=href=")[^"]*' -- *.html >> links1.txt
 
 # sort, dedupe, & remove referer
     cat links1.txt  |  sed 's/https\:\/\/www\.livejournal\.com\/away\?to\=//' | sed 's/\%3A/\:/' | sed 's/\%2F/\//' | sort -u > links2.txt
