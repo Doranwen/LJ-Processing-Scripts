@@ -154,6 +154,13 @@ for d in */ ; do
 # remove Imgur files
         (cd ../temp/ && rm imgur-*)
     fi
+# check if there are Photobucket hosted urls in the temp folder, and run loop if yes
+    if test -n "$(find ../temp/ -maxdepth 1 -name 'photobucket*' -print -quit)"; then
+# combine Imgur links
+        (cd ../temp/ && cat photobucket-* | sort -u > ../../Text4AT/photobucket-"$dtrimmed".txt)
+# remove Imgur files
+        (cd ../temp/ && rm photobucket-*)
+    fi
 # combine other links
     (cd ../temp/ && cat ./* | sort -u > ../../Text4AT/other-"$dtrimmed".txt)
 # remove empty directories and files inside LJ folder
