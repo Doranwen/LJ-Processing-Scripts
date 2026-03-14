@@ -25,7 +25,7 @@ Place html2pdf in the pdf processing folder and make sure it has a headless brow
 8.  Tidy up the results by moving the imgur and other links files under "Text4AT" to the appropriate subfolders.
 
 ## End Result
-You should end up with a folder that has a pdf for every html file, a subfolder for each post with any images besides LJ userpics, a subfolder for all userpics (from every comment and post), and a subfolder caled "ImageLinks", in which the link to every embedded image on every post should be recorded in a a txt file per post.
+You should end up with a folder that has a pdf for every html file, a subfolder for each post with any images besides LJ userpics, a subfolder for all userpics (from every comment and post), and a subfolder called "ImageLinks", in which the link to every embedded image on every post should be recorded in a a txt file per post.
 
 You should end up with txt files under "Text4AT" beginning with "imgur-" and "other-".  There should be one "other-" file for each LJ name, but files beginning with "imgur-" will be less likely; they should only appear for LJs which had embedded imgur files in them.
 
