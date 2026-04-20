@@ -32,9 +32,9 @@ for d in */ ; do
             mv temp.txt ../temp/photobucket-"$post".txt
         fi
 # check if there are Livejournal hosted urls in the txt file, and run loop if yes
-        if grep -Eq "https://imgprx.livejournal.net/|https://pics.livejournal.com/" ImageLinks/"$post".txt; then
+        if grep -Eq "https://imgprx.livejournal.net/|https://pics.livejournal.com/|https://l-files.livejournal.net/vgift/" ImageLinks/"$post".txt; then
 # extract LJ urls from txt file to temporary file
-            grep -E "https://imgprx.livejournal.net/|https://pics.livejournal.com/" ImageLinks/"$post".txt | sort -u > temp.txt
+            grep -E "https://imgprx.livejournal.net/|https://pics.livejournal.com/|https://l-files.livejournal.net/vgift/" ImageLinks/"$post".txt | sort -u > temp.txt
 # create directory for pictures if it doesn't already exist
             mkdir -p "$post"
 # loop through each url
@@ -71,13 +71,21 @@ for d in */ ; do
 # download link
                         (cd "$post" && wget --content-disposition "$redirect")
                     fi
-                else
-# if pic is pics.livejournal.com, get largest version of pic
+# check if pic is pics.livejournal.com
+                elif (echo "$ljlink" | grep -Eq "https://pics.livejournal.com"); then
+# get largest version of pic
                     bigimg=$(echo "$ljlink" | sed 's,/s[0-9]*x[0-9]*$,,')
 # fix filename
                     ljimg=$(echo "$bigimg" | sed 's/.*https\:\/\/pics.livejournal.com\///' | sed 's/\//-/g')      
 # download link
                     (cd "$post" && curl -fL --output "$ljimg" "$bigimg")              
+                else
+# if pic is l-files.livejournal.net, extract pic name
+                    ljimg=$(echo "$ljlink" | sed 's/^.\{38\}//' | sed 's/\//-/g')
+# download link
+                    (cd "$post" && curl -fL --output "$ljimg" "$ljlink")
+# add extension
+                    (cd "$post" && mv "$ljimg" "$ljimg.$(grep "^$(file --brief --mime-type "$ljimg")[[:space:]]" /etc/mime.types | sed 's/.*[[:space:]]//')")
                 fi
 # sleep to avoid ip bans
                 sleep 1
