@@ -18,8 +18,12 @@ for d in */ ; do
         if grep -q "photobucket" ImageLinks/"$post".txt; then
 # extract Photobucket urls from txt file to temporary file
             grep "photobucket" ImageLinks/"$post".txt | sort -u > temp.txt
+# strip bad strings from urls & fix s to i
+            sed 's/\~.*//' temp.txt | sed 's|://s|://i|' > temp1.txt
 # run gallery-dl on Photobucket urls
-            ../gallery-dl.bin --sleep 0.0-0.5 -i temp.txt
+            ../gallery-dl.bin --sleep 0.0-0.5 -i temp1.txt
+# remove temporary file
+            rm temp1.txt
 # check if directory already exists & remove directlink
             if [ -d "$post" ]; then
                 mv directlink/* "$post"
@@ -49,8 +53,10 @@ for d in */ ; do
                     redirect=$(echo "$reallink" | sed 's/\?.*//')
 # check if link is for Photobucket
                     if [[ "$redirect" == *"photobucket"* ]]; then
+# strip bad strings from urls & fix s to i
+                        fixedlink=$(echo "$redirect" | sed 's/\~.*//' | sed 's|://s|://i|')
 # run gallery-dl on Photobucket urls
-                        (cd "$post" && ../../gallery-dl.bin --sleep 0.0-0.5 "$redirect")
+                        (cd "$post" && ../../gallery-dl.bin --sleep 0.0-0.5 "$fixedlink")
 # check if directory already exists & remove directlink
                         if [ -d "$post" ]; then
                             mv directlink/* "$post"
