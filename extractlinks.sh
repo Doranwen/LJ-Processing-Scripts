@@ -5,7 +5,7 @@ for d in */ ; do
     echo "Beginning to process $d..."
     cd "$d" || exit
     folder=$(echo "$d" | sed 's:/*$::')
-    urlname=$(echo "$folder" | sed 's/\_/\-/')
+    urlname=$(echo "$folder" | sed 's/\_/\-/g')
 
 # extract links
     grep -Pho '(?<=href=")[^"]*' -- *.html >> links1.txt
@@ -39,7 +39,7 @@ for d in */ ; do
     mv links3.txt ../Text4AT/LJlinks/"$folder"-ljlinks.txt
 
 # filter to usernames only
-    grep -aioPh '((?<=:\/\/)(?!(www|community|users))[^\.]+(?=\.livejournal\.com)|((?<=\?user=)[^&]+)|((?<=:\/\/community\.livejournal\.com\/)[^\/]+)|(?<=livejournal\.com\/users\/)[^\/]+|(?<=livejournal\.com\/community\/)[^\/]+|((?<=:\/\/users\.livejournal\.com\/)[^\/]+))' links5.txt | sed 's/\-/\_/' | sort -u > "$folder"-ljnames.txt
+    grep -aioPh '((?<=:\/\/)(?!(www|community|users))[^\.]+(?=\.livejournal\.com)|((?<=\?user=)[^&]+)|((?<=:\/\/community\.livejournal\.com\/)[^\/]+)|(?<=livejournal\.com\/users\/)[^\/]+|(?<=livejournal\.com\/community\/)[^\/]+|((?<=:\/\/users\.livejournal\.com\/)[^\/]+))' links5.txt | sed 's/\-/\_/g' | sort -u > "$folder"-ljnames.txt
 
 # delete temp files
     rm links4.txt links5.txt alllinks1.txt
