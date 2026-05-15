@@ -1,8 +1,8 @@
 # LJ-Processing-Scripts
-A collection of scripts for processing downloaded livejournals (converting html to pdf, saving images, extracting links, zipping folders).  These are designed to run on Linux.
+A collection of scripts for processing downloaded livejournals (converting html to pdf, saving images, extracting links, zipping folders, and downloading photo album images).  These are designed to run on Linux.
 
 ## General Setup & Required Programs
-Under one folder, create subfolder "Text4AT" as well as at least one other subfolder to put the scripts into.  I recommend a separate subfolder each for pdf processing, image processing, and link extraction / zipping.
+Under one folder, create subfolder "Text4AT" as well as at least one other subfolder to put the scripts into.  I recommend a separate subfolder each for pdf processing, image processing, link extraction / zipping, and photo album image downloading.
 
 Under the "Text4AT" folder, create the following folders:  "AllLinks", "LJlinks", and "Names".  I recommend also creating folders "Imgur", "Other", and "Photobucket" to move the resulting text files into.
 
@@ -14,7 +14,7 @@ Add a .conf file for gallery-dl and modify the base-directory line so it reads `
 
 Place html2pdf in the pdf processing folder and make sure it has a headless browser installed:  https://github.com/vermaysha/html2pdf
 
-## Usage
+## Usage for autopdf, imagegrab, and extractlinks
 1.  Take downloaded livejournal inside folder (named by the journal's name) and place that folder in the pdf processing folder.
 2.  Run autopdf.sh from the pdf processing folder.
 3.  Move LJ folder to image processing folder.
@@ -44,6 +44,17 @@ The files in "LJlinks" contain all links with "livejournal" in the url somewhere
 
 The files in "Names" contain the names of all journals which had specific posts *linked to* from that LJ.  This can be useful in the example of a fic or icon community, to get a list of the personal journals to which people posted their fics and graphics.
 
+## Usage for photodl
+1.  Install DownThemAll! (or other similar extension) in your browser.
+2.  Visit the url for a LJ photo album.
+3.  Launch downloading window for the extension, and filter by "mode=view".  It should select a set of urls that all look like this:  `https://username.livejournal.com/photo/album/idnumber/?mode=view&id=photoid` where `username` is the username for that LJ user, `idnumber` is the specific numeric string for that photo album, and `photoid` is the specific numeric string for each individual photo in that album.  The `photoid` is the part that will be different for each of the links.
+4.  Download them, making sure to auto-rename conflicting files (it will try to name each html file as `idnumber` which is obviously the same for every photo in that album).
+5.  Create a folder using the album's name (no spaces!) as the folder name.
+6.  Move the downloaded files into that folder, and move that folder as a subfolder of the photo album image downloading folder.
+7.  Run photodl.sh from the photo album image downloading folder.
+
+For each subfolder of photo album html files, it should automatically extract all the links of the photos in that album and put them in a txt file, delete the html files, and download all the images from the links in the txt file.
+
 ## Questions & Explanations
 ### Q:  Why do the "AllLinks" and such files go in their own folder but the "imgur-", "photobucket-", and "other-" files don't?
 A:  I wanted to be able to easily track which folders in a batch had finished image processing.  During periods of long downloading of files (such as userpics) it can be impossible to tell which LJ is being worked on.  Looking in the Text4AT folder makes it abundantly clear; the next folder alphabetically after the final "other-" file is the one currently being worked on.
@@ -52,4 +63,4 @@ A:  I wanted to be able to easily track which folders in a batch had finished im
 A:  Rename "LJlinks" to "Ljlinks" and edit your copy of extractlinks.sh accordingly.  This fixed the issue for one computer I tried it on.
 
 ### Q:  The script only works on one folder and then quits!
-A:  Check that the path has no spaces in it.  Having spaces in the file path (even if it's a folder or two above the one you're working in) can cause issues.
+A:  Check that the file path has no spaces in it.  Having spaces in the file path (even if it's a folder or two above the one you're working in) can cause issues.
