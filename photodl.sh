@@ -9,10 +9,10 @@ for d in */ ; do
 # extract urls and dump into txt file in folder
         grep "og:image" "$f" | grep -oP 'content="\K[^"?]+' >> PhotoLinks.txt
     done
-# delete html files
-    find . -name "*.html" -type f -delete
 # download images 
     wget -w 2 -i PhotoLinks.txt
+# delete html files
+    find . -name "*.html" -type f -delete
 # change directory
     cd ..
 done
