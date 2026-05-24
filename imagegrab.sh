@@ -36,9 +36,9 @@ for d in */ ; do
             mv temp.txt ../temp/photobucket-"$post".txt
         fi
 # check if there are Livejournal hosted urls in the txt file, and run loop if yes
-        if grep -Eq "https://imgprx.livejournal.net/|https://pics.livejournal.com/|https://l-files.livejournal.net/vgift/" ImageLinks/"$post".txt; then
+        if grep -Eq "https://imgprx.livejournal.net/|https://pics.livejournal.com/|https://ic.pics.livejournal.com/|https://l-files.livejournal.net/vgift/" ImageLinks/"$post".txt; then
 # extract LJ urls from txt file to temporary file
-            grep -E "https://imgprx.livejournal.net/|https://pics.livejournal.com/|https://l-files.livejournal.net/vgift/" ImageLinks/"$post".txt | sort -u > temp.txt
+            grep -E "https://imgprx.livejournal.net/|https://pics.livejournal.com/|https://ic.pics.livejournal.com/|https://l-files.livejournal.net/vgift/" ImageLinks/"$post".txt | sort -u > temp.txt
 # create directory for pictures if it doesn't already exist
             mkdir -p "$post"
 # loop through each url
@@ -77,12 +77,12 @@ for d in */ ; do
 # download link
                         (cd "$post" && wget --content-disposition "$redirect")
                     fi
-# check if pic is pics.livejournal.com
-                elif (echo "$ljlink" | grep -Eq "https://pics.livejournal.com"); then
+# check if pic is pics.livejournal.com or ic.pics.livejournal.com
+                elif (echo "$ljlink" | grep -Eq "pics.livejournal.com"); then
 # get largest version of pic
                     bigimg=$(echo "$ljlink" | sed 's,/s[0-9]*x[0-9]*$,,')
 # fix filename
-                    ljimg=$(echo "$bigimg" | sed 's/.*https\:\/\/pics.livejournal.com\///' | sed 's/\//-/g')      
+                    ljimg=$(echo "$bigimg" | sed 's/.*https\:\/\/pics.livejournal.com\///' | sed 's/.*https\:\/\/ic.pics.livejournal.com\///' | sed 's/\//-/g')      
 # download link
                     (cd "$post" && curl -fL --output "$ljimg" "$bigimg")              
                 else
