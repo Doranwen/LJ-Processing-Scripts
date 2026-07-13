@@ -13,7 +13,7 @@ for d in */ ; do
 # set post name as variable
         post=$(basename "$f" .html)
 # extract urls and dump into txt file in folder
-        grep -oP 'src="\K[^"?]+|src='\''\K[^'\''?]+|background: url\(\K[^)]+|background-image: url\(\K[^)]+|background: \#(?<=)[A-Z0-9]{6}(?=) url\(\K[^)]*' "$f" > ImageLinks/"$post".txt
+        grep -oP 'src="\K[^"?]+|src='\''\K[^'\''?]+|background: url\(\K[^)]+|background-image: url\(\K[^)]+[background:url\(\K[^)]+|background: \#(?<=)[A-Z0-9]{6}(?=) url\(\K[^)]*' "$f" > ImageLinks/"$post".txt
 # check if there are Photobucket urls in the txt file, and run loop if yes
         if grep -q "photobucket" ImageLinks/"$post".txt; then
 # extract Photobucket urls from txt file to temporary file
