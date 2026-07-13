@@ -138,6 +138,23 @@ for d in */ ; do
         mv temp.txt ../temp/flickr-"$post".txt
         fi
     done
+# check if there are LJplus hosted urls in the txt file, and run loop if yes
+        if grep -Eq "ljplus.ru" ImageLinks/"$post".txt; then
+# extract LJ urls from txt file to temporary file
+            grep -E "ljplus.ru" ImageLinks/"$post".txt | sort -u > temp.txt
+# create directory for pictures if it doesn't already exist
+            mkdir -p "$post"
+# loop through each url
+            while read -r ljpluslink; do
+# download link
+                (cd "$post" && wget --content-disposition "$ljpluslink")
+# sleep to avoid ip bans
+                sleep 1
+            done <temp.txt
+# move temp file to where it can be collected
+        mv temp.txt ../temp/ljplus-"$post".txt
+        fi
+    done
 # combine all txt files in picture posts, sort unique, and dump to temporary file
     cat ImageLinks/*.txt | sort -u > temp.txt || exit
 # extract LiveJournal userpics to temporary file
