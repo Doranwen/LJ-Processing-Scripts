@@ -154,7 +154,6 @@ for d in */ ; do
 # move temp file to where it can be collected
         mv temp.txt ../temp/ljplus-"$post".txt
         fi
-    done
 # combine all txt files in picture posts, sort unique, and dump to temporary file
     cat ImageLinks/*.txt | sort -u > temp.txt || exit
 # extract LiveJournal userpics to temporary file
