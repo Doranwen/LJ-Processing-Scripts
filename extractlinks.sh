@@ -11,7 +11,7 @@ for d in */ ; do
     grep -Pho '(?<=href=")[^"]*' -- *.html >> links1.txt
 
 # sort, dedupe, & remove referer
-    cat links1.txt  | sed 's/\%3A/\:/g' | sed 's/\%2F/\//g' | sed 's/https\:\/\/www\.livejournal\.com\/away?to\=//g' | sort -u > links2.txt
+    cat links1.txt | sed 's~%3A~:~g' | sed 's~%2F~/~g' | sed 's~https://www\.livejournal\.com/away\?to=~~g' | sort -u > links2.txt
 
 # extract LJ links
     grep "livejournal" links2.txt > ../links3.txt
