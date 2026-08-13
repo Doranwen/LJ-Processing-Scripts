@@ -70,7 +70,7 @@ for d in */ ; do
 # extract pic name
                         ljimg=$(echo "$redirect" | sed -E 's/.*(..........)/\1/' | sed -E 's/\-/\_/')
 # download link
-                        (cd "$post" && curl -fL --output "$ljimg" "$redirect")
+                        (cd "$post" && curl -fL -w "%{stderr}Downloading %{url}\n" --output "$ljimg" "$redirect" 2> >(tee -a ../image-download-status.log))
 # add extension
                         (cd "$post" && mv "$ljimg" "$ljimg.$(grep "^$(file --brief --mime-type "$ljimg")[[:space:]]" /etc/mime.types | sed 's/.*[[:space:]]//')")
                     else
@@ -84,12 +84,14 @@ for d in */ ; do
 # fix filename
                     ljimg=$(echo "$bigimg" | sed 's/.*https\:\/\/pics.livejournal.com\///' | sed 's/.*https\:\/\/ic.pics.livejournal.com\///' | sed 's/\//-/g')      
 # download link
-                    (cd "$post" && curl -fL --output "$ljimg" "$bigimg")              
+                    (cd "$post" && curl -fL -w "%{stderr}Downloading %{url}\n" --output "$ljimg" "$bigimg" 2> >(tee -a ../image-download-status.log))
+# add extension
+                    (cd "$post" && mv "$ljimg" "$ljimg.$(grep "^$(file --brief --mime-type "$ljimg")[[:space:]]" /etc/mime.types | sed 's/.*[[:space:]]//')")
                 else
 # if pic is l-files.livejournal.net, extract pic name
                     ljimg=$(echo "$ljlink" | sed 's/^.\{38\}//' | sed 's/\//-/g')
 # download link
-                    (cd "$post" && curl -fL --output "$ljimg" "$ljlink")
+                    (cd "$post" && curl -fL -w "%{stderr}Downloading %{url}\n" --output "$ljimg" "$ljlink" 2> >(tee -a ../image-download-status.log))
 # add extension
                     (cd "$post" && mv "$ljimg" "$ljimg.$(grep "^$(file --brief --mime-type "$ljimg")[[:space:]]" /etc/mime.types | sed 's/.*[[:space:]]//')")
                 fi
@@ -114,7 +116,7 @@ for d in */ ; do
 # extract userpic name
                 imgurimg=$(echo "$imglink" | sed 's@.*https\?\://\(i.\)\?imgur.com/@@i' | sed 's@/@-@g')
 # download link
-                (cd "$post" && curl -fL --output "$imgurimg" "$imglink")
+                (cd "$post" && curl -fL -w "%{stderr}Downloading %{url}\n" --output "$imgurimg" "$imglink" 2> >(tee -a ../image-download-status.log))
 # sleep to avoid ip bans
                 sleep 1
             done <temp.txt
@@ -165,7 +167,7 @@ for d in */ ; do
 # extract userpic name
         userpic=$(echo "$ulink" | sed 's/.*https\:\/\/l-userpic.livejournal.com\///' | sed 's/\//-/g')
 # download each link
-        (cd userpics && curl -fL --output "$userpic" "$ulink")
+        (cd userpics && curl -fL -w "%{stderr}Downloading %{url}\n" --output "$userpic" "$ulink" 2> >(tee -a ../image-download-status.log))
 # sleep to avoid ip bans
         sleep 1
     done <temp2.txt
