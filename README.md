@@ -1,5 +1,5 @@
 # LJ-Processing-Scripts
-A collection of scripts for processing downloaded livejournals (converting html to pdf, saving images, extracting links, zipping folders, and downloading photo album images).  These are designed to run on Linux.
+A collection of scripts for processing downloaded livejournals (converting html to pdf, saving images and recording errors in downloading them, extracting links, zipping folders, and downloading photo album images).  These are designed to run on Linux.
 
 ## General Setup & Required Programs
 Under one folder, create subfolder "Text4AT" as well as at least one other subfolder to put the scripts into.  I recommend a separate subfolder each for pdf processing, image processing, link extraction / zipping, and photo album image downloading.
@@ -14,24 +14,26 @@ Add a .conf file for gallery-dl and modify the base-directory line so it reads `
 
 Place html2pdf in the pdf processing folder and make sure it has a headless browser installed:  https://github.com/vermaysha/html2pdf
 
-## Usage for autopdf, imagegrab, and extractlinks
+## Usage for autopdf, imagegrab, find_errors, and extractlinks
 1.  Take downloaded livejournal inside folder (named by the journal's name) and place that folder in the pdf processing folder.
 2.  Run autopdf.sh from the pdf processing folder.
 3.  Move LJ folder to image processing folder.
 4.  Run imagegrab.sh from the image processing folder.
 5.  Move LJ folder to link extraction folder.
-6.  Run extractlinks.sh from the link extraction folder.
+6.  Run find_errors and extractlinks.sh from the link extraction folder.
 7.  (Optionally) Also run autozip.sh from the link extraction folder, and move resulting zip where you want it.
 8.  Tidy up the results by moving the imgur and other links files under "Text4AT" to the appropriate subfolders.
 
 ## End Result
 You should end up with a folder that has a pdf for every html file, a subfolder for each post with any images besides LJ userpics, a subfolder for all userpics (from every comment and post), and a subfolder called "ImageLinks", in which the link to every embedded image on every post should be recorded in a a txt file per post.
 
-You should end up with txt files under "Text4AT" beginning with "imgur-", "other-", and "photobucket-".  There should be one "other-" file for each LJ name, and "photobucket-" files will occur the vast majority of the time, but files beginning with "imgur-" will be less likely; they should only appear for LJs which had embedded imgur files in them.
+You should end up with txt files under "Text4AT" beginning with "errors-", "imgur-", "other-", and "photobucket-".  There should be one "other-" file for each LJ name, and "photobucket-" files will occur the vast majority of the time, but files beginning with "imgur-" will be less likely; they should only appear for LJs which had embedded imgur files in them.
 
 You should also end up with txt files under "AllLinks", "LJlinks", and "Names" for many LJs.  Nearly all LJs should have corresponding files in "AllLinks" and all will have files for "LJlinks", but fewer may have files in "Names".
 
 ## Explanation of Results
+The files beginning with "errors-" list every image link that failed to download due to 412 or 503 errors.
+
 The files beginning with "imgur-" list every embedded pic link for Imgur which appeared in that LJ.
 
 The files beginning with "photobucket-" list every embedded pic link for Photobucket which appeared in that LJ.
